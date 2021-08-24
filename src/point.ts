@@ -8,8 +8,5 @@ export class Point extends Phaser.GameObjects.Sprite{
         scene.physics.world.enableBody(this);
         this.setScale(0.05);
         this.tint = Math.random() * 0xffffff;
-        this.throw = 0;
-        this.throwX = 0;
-        this.throwY = 0;
     }
 }

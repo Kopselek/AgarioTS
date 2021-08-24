@@ -75,21 +75,19 @@ function update ()
         }
     });
 
-    //score gained
-    if(score > oldScore){
-        oldScore = score;
-        this.events.emit('updateScore', score);
-        sceneI.player.updateSize(score);
-        let zoom = this.cameras.main.zoom - 0.01;
+    if(score !== oldScore){
+        var scoreDifference = score - oldScore - 1
+        this.events.emit('updateScore', score + scoreDifference);
+        sceneI.player.updateSize(score + scoreDifference);
+        if(score < oldScore){
+            var zoomAdd = -0.01
+        }else{
+            var zoomAdd = 0.01
+        }
+        let zoom = this.cameras.main.zoom - zoomAdd;
         cameraZoom(this.cameras.main, zoom);
-    }
-    //throw point
-    if(score < oldScore){
+
         oldScore = score;
-        this.events.emit('updateScore', score);
-        sceneI.player.updateSize(score);
-        let zoom = this.cameras.main.zoom + 0.01;
-        cameraZoom(this.cameras.main, zoom);
     }
 
     if(sceneI.wDown > 0){
