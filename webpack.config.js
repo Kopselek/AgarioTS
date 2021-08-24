@@ -33,9 +33,9 @@ module.exports = {
 	},
 	plugins: [
 		new CleanPlugin(),
-		// new CopyPlugin({
-			// patterns: [{ from: './src/assets', to: 'assets'}]
-		// }),
+		new CopyPlugin({
+			patterns: [{ from: './src/assets', to: 'assets'}]
+		}),
 		new HtmlWebpackPlugin({
 			title: 'Agario.ts',
 		})

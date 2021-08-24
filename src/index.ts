@@ -10,8 +10,8 @@ const sceneI : IndexScene = this;
 
 function preload ()
 {
-    this.load.image('ball', 'ball.png');
-    this.load.image('bg', 'bg.png');
+    this.load.image('ball', 'assets/ball.png');
+    this.load.image('bg', 'assets/bg.png');
 }
 
 function create ()
