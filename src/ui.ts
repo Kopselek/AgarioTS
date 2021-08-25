@@ -1,8 +1,8 @@
-export class Ui extends Phaser.Scene{
+export class UI extends Phaser.Scene{
     score: number;
     scoreText: Phaser.GameObjects.Text;
     constructor(){
-        super("Ui");
+        super("UI");
     }
 
     create(data: any){
