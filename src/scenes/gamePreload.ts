@@ -1,12 +1,11 @@
 import { GameScene } from "../gameScene";
 
-export default class GamePreload extends Phaser.Scene{
+export class GamePreload extends GameScene{
     constructor(){
         super("gamePreload");
     }
 
     preload () {
-        console.log('preload');
         this.load.image('ball', 'assets/ball.png');
         this.load.image('bg', 'assets/bg.png');
     }

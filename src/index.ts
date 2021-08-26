@@ -1,6 +1,6 @@
 import * as Phaser from "phaser"
-import GamePreload from "./scenes/gamePreload";
-import Game from "./scenes/game";
+import { GamePreload } from "./scenes/gamePreload";
+import { Game } from "./scenes/game";
 
 var config = {
     type: Phaser.AUTO,

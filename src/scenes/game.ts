@@ -1,38 +1,32 @@
 import { GameScene } from "../gameScene";
-import { setCameraZoom } from "../utility";
 import { Player } from "../player";
 import { Point } from "../point";
 
-export default class Game extends Phaser.Scene{
+export class Game extends GameScene{
     constructor(){
         super("game");
     }
 
     create ()
     {
-        console.log('create');
-        const gameScene : GameScene = this;
         var points: Point[] = []
 
-        gameScene.bg = this.add.tileSprite(0, 0, 2000, 2000, 'bg');
+        this.bg = this.add.tileSprite(0, 0, 2000, 2000, 'bg');
 
-        gameScene.wDown = 0;
+        this.wDown = 0;
 
         const quantity = 200;
         for(var i = 0; i < quantity; i++){
-            points.push(
-                gameScene.point = new Point(this, Phaser.Math.Between(-300,300), Phaser.Math.Between(-300,300))
-                )
+            points.push(this.point = new Point(this, Phaser.Math.Between(-300,300), Phaser.Math.Between(-300,300)))
         }
 
-        gameScene.player = new Player(this, Phaser.Math.Between(-300,300), Phaser.Math.Between(-300,300));
-        this.cameras.main.startFollow(gameScene.player);
-        setCameraZoom(this.cameras.main, 1);
+        this.player = new Player(this, Phaser.Math.Between(-300,300), Phaser.Math.Between(-300,300));
+        this.cameras.main.startFollow(this.player);
+        this.setCameraZoom(this.cameras.main, 1);
     }
 
     update ()
     {
-        console.log('update')
         const gameScene : GameScene = this;
         // variable to change if you like
         const range = 25;
@@ -40,24 +34,20 @@ export default class Game extends Phaser.Scene{
         var size = gameScene.player.scale * 5;
         var speed = 1 - size / 10;
     
-        let velocity = new Phaser.Math.Vector2();
         var mouseX = gameScene.input.mousePointer.x;
         var mouseY = gameScene.input.mousePointer.y;
-        velocity.x = mouseX - gameScene.cameras.main.centerX;
-        velocity.y = mouseY - gameScene.cameras.main.centerY;
+        var centerX = gameScene.cameras.main.centerX;
+        var centerY = gameScene.cameras.main.centerY;
     
-        var mouseDistance = Math.abs(velocity.x) + Math.abs(velocity.y);
+        var mouseDistance = Phaser.Math.Distance.Between(mouseX, mouseY, centerX, centerY);
         if(mouseDistance < 100){
             var removeSpeed = 0.5 - mouseDistance / 200;
             speed = speed - removeSpeed
         }
     
-        const distance = velocity;
-        distance.normalize();
+        let direction = new Phaser.Math.Vector2(mouseX - centerX, mouseY - centerY).normalize();
 
-        gameScene.player.x += distance.x * speed;
-        gameScene.player.y += distance.y * speed;
-        var X = gameScene.player.x;
-        var Y = gameScene.player.y;
+        gameScene.player.x += direction.x * speed;
+        gameScene.player.y += direction.y * speed;
     }
 }
