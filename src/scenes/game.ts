@@ -34,7 +34,7 @@ export class Game extends GameScene{
         const gameScene : GameScene = this;
     
         const size = gameScene.player.scale * 5;
-        let speed = 1 - size / 10;
+        let speed = 1 - this.player.score / 200;
     
         const mouseX = gameScene.input.mousePointer.x;
         const mouseY = gameScene.input.mousePointer.y;
@@ -48,7 +48,6 @@ export class Game extends GameScene{
         }
     
         let direction = new Phaser.Math.Vector2(mouseX - centerX, mouseY - centerY).normalize();
-
         gameScene.player.x += direction.x * speed * deltaTime / 6;
         gameScene.player.y += direction.y * speed * deltaTime / 6;
     }
