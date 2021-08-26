@@ -11,11 +11,12 @@ export class Game extends GameScene{
     {
         var points: Point[] = []
 
-        this.bg = this.add.tileSprite(0, 0, 2000, 2000, 'bg');
+        this.bg = this.add.tileSprite(0, 0, 1000, 1000, 'bg');
+        this.physics.world.setBounds(-500,-500,1000,1000);
 
-        const quantity = 300;
+        const quantity = 400;
         for(var i = 0; i < quantity; i++){
-            points.push(this.point = new Point(this, Phaser.Math.Between(-700,700), Phaser.Math.Between(-700,700)))
+            points.push(this.point = new Point(this, Phaser.Math.Between(-450,450), Phaser.Math.Between(-450,450)))
         }
 
         this.player = new Player(this, Phaser.Math.Between(-300,300), Phaser.Math.Between(-300,300));
