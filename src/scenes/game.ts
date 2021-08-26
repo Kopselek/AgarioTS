@@ -32,15 +32,15 @@ export class Game extends GameScene{
 
     update (time: number, deltaTime: number)
     {
-        const gameScene : GameScene = this;
+        let playerScore = this.player.score
+        this.events.emit('updateScore', playerScore);
     
-        const size = gameScene.player.scale * 5;
-        let speed = 1 - this.player.score / 200;
+        let speed = 1 - Math.min(0.7, playerScore / 200);
     
-        const mouseX = gameScene.input.mousePointer.x;
-        const mouseY = gameScene.input.mousePointer.y;
-        const centerX = gameScene.cameras.main.centerX;
-        const centerY = gameScene.cameras.main.centerY;
+        const mouseX = this.input.mousePointer.x;
+        const mouseY = this.input.mousePointer.y;
+        const centerX = this.cameras.main.centerX;
+        const centerY = this.cameras.main.centerY;
     
         const mouseDistance = Phaser.Math.Distance.Between(mouseX, mouseY, centerX, centerY);
         if(mouseDistance < 100){
@@ -49,8 +49,8 @@ export class Game extends GameScene{
         }
     
         let direction = new Phaser.Math.Vector2(mouseX - centerX, mouseY - centerY).normalize();
-        gameScene.player.x += direction.x * speed * deltaTime / 6;
-        gameScene.player.y += direction.y * speed * deltaTime / 6;
+        this.player.x += direction.x * speed * deltaTime / 6;
+        this.player.y += direction.y * speed * deltaTime / 6;
     }
 
     pointCollision(player : Player, point : Point) {

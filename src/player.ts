@@ -1,5 +1,5 @@
 export class Player extends Phaser.Physics.Arcade.Sprite{
-    score = 1;
+    score = 0;
     constructor(scene: Phaser.Scene, x: number, y: number){
         super(scene, x, y, "ball", 0);
         scene.add.existing(this);

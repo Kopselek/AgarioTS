@@ -1,4 +1,5 @@
 import { GameScene } from "../gameScene";
+import { UI } from "../ui";
 
 export class GamePreload extends GameScene{
     constructor(){
@@ -12,5 +13,6 @@ export class GamePreload extends GameScene{
 
     create() {
         this.scene.start('game');
+        this.scene.add('UI', UI, true)
     }
 }
