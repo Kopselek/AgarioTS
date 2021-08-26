@@ -25,9 +25,7 @@ export class Game extends GameScene{
         this.setCameraZoom(this.cameras.main, 2);
         
         //physics
-        this.physics.add.overlap(this.player, points, function () {
-            
-          });
+        this.physics.add.overlap(this.player, points, this.eatPoint);
         
     }
 
@@ -53,5 +51,9 @@ export class Game extends GameScene{
 
         gameScene.player.x += direction.x * speed * deltaTime / 6;
         gameScene.player.y += direction.y * speed * deltaTime / 6;
+    }
+
+    eatPoint(player : Player, point : Point) {
+        point.destroy();
     }
 }
