@@ -22,7 +22,7 @@ export class Game extends GameScene{
 
         this.player = new Player(this, Phaser.Math.Between(-300,300), Phaser.Math.Between(-300,300));
         this.cameras.main.startFollow(this.player);
-        this.setCameraZoom(this.cameras.main, 1);
+        this.setCameraZoom(this.cameras.main, 2);
     }
 
     update (time: number, deltaTime: number)

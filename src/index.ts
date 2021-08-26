@@ -4,8 +4,8 @@ import { Game } from "./scenes/game";
 
 var config = {
     type: Phaser.AUTO,
-    width: 400,
-    height: 300,
+    width: 1440,
+    height: 860,
     backgroundColor: '#d9dddc',
     physics: {
         default: 'arcade',
@@ -16,14 +16,14 @@ var config = {
     scene: [GamePreload, Game],
     render: {
 		pixelArt: true,
-		antialias: false,
-		antialiasGL: false,
-		desynchronized: false,
+		antialias: true,
+		antialiasGL: true,
 		roundPixels: true,
 	},
     scale: {
-		zoom: 2,
+        mode: Phaser.Scale.FIT,
         autoCenter: Phaser.Scale.CENTER_BOTH
+
     }
 };
 
