@@ -13,16 +13,22 @@ export class Game extends GameScene{
 
         this.bg = this.add.tileSprite(0, 0, 2000, 2000, 'bg');
 
-        this.wDown = 0;
-
-        const quantity = 200;
+        const quantity = 300;
         for(var i = 0; i < quantity; i++){
-            points.push(this.point = new Point(this, Phaser.Math.Between(-300,300), Phaser.Math.Between(-300,300)))
+            points.push(this.point = new Point(this, Phaser.Math.Between(-700,700), Phaser.Math.Between(-700,700)))
         }
 
         this.player = new Player(this, Phaser.Math.Between(-300,300), Phaser.Math.Between(-300,300));
+
+        //camera
         this.cameras.main.startFollow(this.player);
         this.setCameraZoom(this.cameras.main, 2);
+        
+        //physics
+        this.physics.add.overlap(this.player, points, function () {
+            
+          });
+        
     }
 
     update (time: number, deltaTime: number)
