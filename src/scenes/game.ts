@@ -23,7 +23,6 @@ export class Game extends GameScene{
 
         //camera
         this.cameras.main.startFollow(this.player);
-        this.setCameraZoom(this.cameras.main, 2);
         
         //physics
         this.physics.add.overlap(this.player, points, this.pointCollision);
@@ -34,6 +33,7 @@ export class Game extends GameScene{
     {
         let playerScore = this.player.score
         this.events.emit('updateScore', playerScore);
+        this.setCameraZoom(this.cameras.main, this.player.score);
     
         let speed = 1 - Math.min(0.7, playerScore / 200);
     
