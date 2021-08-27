@@ -11,26 +11,16 @@ export class Game extends GameScene{
     create ()
     {
         var balls: Ball[] = []
-
-        this.bg = this.add.tileSprite(0, 0, 1000, 1000, 'bg');
-        this.physics.world.setBounds(-500,-500,1000,1000);
-
-        const quantity = 400;
-        for(var i = 0; i < quantity; i++){
-            balls.push(this.ball = new Ball(this, Phaser.Math.Between(-450,450), Phaser.Math.Between(-450,450)))
-        }
-
-        this.player = new Player(this, Phaser.Math.Between(-300,300), Phaser.Math.Between(-300,300));
-
-        //camera
-        this.cameras.main.startFollow(this.player);
+        this.createWorld(this, balls);
+        this.createPlayer(this);
         
-        //physics
+        //add physics
         this.physics.add.overlap(this.player, balls, this.pointCollision);
 
         //keyboard input
         let pushKey = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.W);
 
+        //keyboard event
         pushKey.on('down', function (key: Phaser.Input.Keyboard.Key, event: KeyboardEvent) {
             if(this.player.score > 20){
                 let radius = this.player.getRadius();
@@ -57,9 +47,9 @@ export class Game extends GameScene{
     update (time: number, deltaTime: number)
     {
         updateHandler(this);
-    
+        
+        //player movement logic
         let speed = 1 - Math.min(0.7, this.player.score / 200);
-    
         const mouseX = this.input.mousePointer.x;
         const mouseY = this.input.mousePointer.y;
         const centerX = this.cameras.main.centerX;
@@ -80,5 +70,20 @@ export class Game extends GameScene{
         ball.destroy();
         player.score++;
         player.updateSize(player.score);
+    }
+
+    createWorld(scene: GameScene, balls: Ball[]){
+        scene.bg = scene.add.tileSprite(0, 0, 1000, 1000, 'bg');
+        scene.physics.world.setBounds(-500,-500,1000,1000);
+
+        const quantity = 400;
+        for(var i = 0; i < quantity; i++){
+            balls.push(scene.ball = new Ball(scene, Phaser.Math.Between(-450,450), Phaser.Math.Between(-450,450)))
+        }
+    }
+    
+    createPlayer(scene: GameScene){
+        scene.player = new Player(scene, Phaser.Math.Between(-300,300), Phaser.Math.Between(-300,300));
+        scene.cameras.main.startFollow(scene.player);
     }
 }
