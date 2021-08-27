@@ -10,9 +10,13 @@ export class Player extends Phaser.Physics.Arcade.Sprite{
         this.setCollideWorldBounds(true);
     }
     updateSize(size: number){
-        const growing = 1.5;
-        const defaultScale = 55;
+        const growing = 1.2;
+        const defaultScale = 50;
         var newSize = size * growing + defaultScale;
         this.setDisplaySize(newSize, newSize);
+    }
+    
+    getRadius(){
+        return this.body.radius * this.scale;
     }
 }
