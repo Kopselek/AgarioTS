@@ -12,7 +12,14 @@ export class Point extends Phaser.Physics.Arcade.Sprite{
         if(moveTo){
             console.log(moveTo)
             console.log(x, y)
-            scene.physics.moveTo(this, moveTo.x, moveTo.y, 10, 200);
+            scene.physics.moveTo(this, moveTo.x, moveTo.y, 5, 200);
         }
+    }
+
+    updateSize(size: number){
+        const growing = 1.2;
+        const defaultScale = 50;
+        var newSize = size * growing + defaultScale;
+        this.setDisplaySize(newSize, newSize);
     }
 }

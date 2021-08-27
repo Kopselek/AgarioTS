@@ -31,22 +31,24 @@ export class Game extends GameScene{
         let pushKey = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.W);
 
         pushKey.on('down', function (key: Phaser.Input.Keyboard.Key, event: KeyboardEvent) {
-            let radius = this.player.getRadius();
-            const mouseX = this.input.mousePointer.x;
-            const mouseY = this.input.mousePointer.y;
-            const centerX = this.cameras.main.centerX;
-            const centerY = this.cameras.main.centerY;
-
-            let hitBox = new Phaser.Math.Vector2(mouseX - centerX, mouseY - centerY).normalize();
-            hitBox.scale(radius * 1.4);
-            let setPointX = this.player.x + hitBox.x;
-            let setPointY = this.player.y + hitBox.y;
-            hitBox.scale(2)
-            let moveTo = new Phaser.Math.Vector2(this.player.x + hitBox.x, this.player.y + hitBox.y);
-            points.push(this.point = new Point(this, setPointX, setPointY, moveTo))
-
-            this.player.score--;
-            this.player.updateSize(this.player.score);
+            if(this.player.score > 20){
+                let radius = this.player.getRadius();
+                const mouseX = this.input.mousePointer.x;
+                const mouseY = this.input.mousePointer.y;
+                const centerX = this.cameras.main.centerX;
+                const centerY = this.cameras.main.centerY;
+    
+                let hitBox = new Phaser.Math.Vector2(mouseX - centerX, mouseY - centerY).normalize();
+                hitBox.scale(radius * 1.4);
+                let setPointX = this.player.x + hitBox.x;
+                let setPointY = this.player.y + hitBox.y;
+                hitBox.scale(2)
+                let moveTo = new Phaser.Math.Vector2(this.player.x + hitBox.x, this.player.y + hitBox.y);
+                points.push(this.point = new Point(this, setPointX, setPointY, moveTo))
+    
+                this.player.score--;
+                this.player.updateSize(this.player.score);
+            }
         }, this);
         
     }
