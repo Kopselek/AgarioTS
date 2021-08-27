@@ -1,6 +1,6 @@
 import { GameScene } from "../gameScene";
 import { Player } from "../player";
-import { Point } from "../point";
+import { Ball } from "../ball";
 
 export class Game extends GameScene{
     constructor(){
@@ -9,14 +9,14 @@ export class Game extends GameScene{
 
     create ()
     {
-        var points: Point[] = []
+        var points: Ball[] = []
 
         this.bg = this.add.tileSprite(0, 0, 1000, 1000, 'bg');
         this.physics.world.setBounds(-500,-500,1000,1000);
 
         const quantity = 400;
         for(var i = 0; i < quantity; i++){
-            points.push(this.point = new Point(this, Phaser.Math.Between(-450,450), Phaser.Math.Between(-450,450)))
+            points.push(this.point = new Ball(this, Phaser.Math.Between(-450,450), Phaser.Math.Between(-450,450)))
         }
 
         this.player = new Player(this, Phaser.Math.Between(-300,300), Phaser.Math.Between(-300,300));
@@ -44,7 +44,7 @@ export class Game extends GameScene{
                 let setPointY = this.player.y + hitBox.y;
                 hitBox.scale(2)
                 let moveTo = new Phaser.Math.Vector2(this.player.x + hitBox.x, this.player.y + hitBox.y);
-                points.push(this.point = new Point(this, setPointX, setPointY, moveTo))
+                points.push(this.point = new Ball(this, setPointX, setPointY, moveTo))
     
                 this.player.score--;
                 this.player.updateSize(this.player.score);
@@ -77,7 +77,7 @@ export class Game extends GameScene{
         this.player.y += direction.y * speed * deltaTime / 6;
     }
 
-    pointCollision(player : Player, point : Point) {
+    pointCollision(player : Player, point : Ball) {
         point.destroy();
         player.score++;
         player.updateSize(player.score);

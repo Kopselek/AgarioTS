@@ -1,4 +1,4 @@
-export class Point extends Phaser.Physics.Arcade.Sprite{
+export class Ball extends Phaser.Physics.Arcade.Sprite{
     constructor(scene: Phaser.Scene, x: number, y: number, moveTo?: Phaser.Math.Vector2){
         super(scene, x, y, "ball", 0);
         scene.add.existing(this);

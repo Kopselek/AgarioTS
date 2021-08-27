@@ -1,10 +1,10 @@
 import { Player } from "./player"
-import { Point } from "./point"
+import { Ball } from "./ball"
 
 export class GameScene extends Phaser.Scene {
     bg?: Phaser.GameObjects.TileSprite
     player?: Player
-    point?: Point
+    point?: Ball
     wDown?: number
 
     setCameraZoom(camera: Phaser.Cameras.Scene2D.Camera, zoom: number){
