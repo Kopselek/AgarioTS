@@ -1,5 +1,5 @@
 import { GameScene } from "../gameScene";
-import { UI } from "../ui";
+import { UI } from "../UI";
 
 export class GamePreload extends GameScene{
     constructor(){

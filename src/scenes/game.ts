@@ -13,13 +13,10 @@ export class Game extends GameScene{
         this.createWorld(this, balls);
         this.createPlayer(this);
         
-        //add physics
-        this.physics.add.overlap(this.player, balls, this.pointCollision);
+        this.physics.add.overlap(this.player, balls, this.onPointCollision);
 
-        //keyboard input
         let pushKey = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.W);
 
-        //keyboard event
         pushKey.on('down', function (key: Phaser.Input.Keyboard.Key, event: KeyboardEvent) {
             if(this.player.score > 20){
                 let radius = this.player.getRadius();
@@ -28,11 +25,9 @@ export class Game extends GameScene{
         
                 let hitBox = new Phaser.Math.Vector2(x - centerX, y - centerY).normalize();
                 hitBox.scale(radius * 1.4);
-                let setPointX = this.player.x + hitBox.x;
-                let setPointY = this.player.y + hitBox.y;
-                hitBox.scale(2)
-                let moveTo = new Phaser.Math.Vector2(this.player.x + hitBox.x, this.player.y + hitBox.y);
-                balls.push(this.ball = new Ball(this, setPointX, setPointY, moveTo))
+                let direction = hitBox.clone().scale(2);
+                let moveTo = new Phaser.Math.Vector2(this.player.x + direction.x, this.player.y + direction.y);
+                balls.push(this.ball = new Ball(this, this.player.x + hitBox.x, this.player.y + hitBox.y, moveTo))
         
                 this.player.score--;
                 this.player.updateSize(this.player.score);
@@ -47,7 +42,6 @@ export class Game extends GameScene{
         this.events.emit('updateScore', this.player.score);
         this.setCameraZoom(this.cameras.main, this.player.score);
         
-        //player movement logic
         let speed = 1 - Math.min(0.7, this.player.score / 200);
         const {centerX, centerY} = this.cameras.main;
         const {x, y} = this.input.mousePointer;
@@ -57,13 +51,13 @@ export class Game extends GameScene{
             var removeSpeed = 0.5 - mouseDistance / 200;
             speed = speed - removeSpeed
         }
-    
+        
         let direction = new Phaser.Math.Vector2(x - centerX, y - centerY).normalize();
         this.player.x += direction.x * speed * deltaTime / 6;
         this.player.y += direction.y * speed * deltaTime / 6;
     }
 
-    private pointCollision(player : Player, ball : Ball) {
+    private onPointCollision(player : Player, ball : Ball) {
         ball.destroy();
         player.score++;
         player.updateSize(player.score);
