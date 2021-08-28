@@ -1,7 +1,6 @@
 import { GameScene } from "../gameScene";
 import { Player } from "../player";
 import { Ball } from "../ball";
-import { updateHandler } from "../handler";
 
 export class Game extends GameScene{
     constructor(){
@@ -24,55 +23,53 @@ export class Game extends GameScene{
         pushKey.on('down', function (key: Phaser.Input.Keyboard.Key, event: KeyboardEvent) {
             if(this.player.score > 20){
                 let radius = this.player.getRadius();
-                const mouseX = this.input.mousePointer.x;
-                const mouseY = this.input.mousePointer.y;
-                const centerX = this.cameras.main.centerX;
-                const centerY = this.cameras.main.centerY;
-    
-                let hitBox = new Phaser.Math.Vector2(mouseX - centerX, mouseY - centerY).normalize();
+                const {centerX, centerY} = this.cameras.main;
+                const {x, y} = this.input.mousePointer;
+        
+                let hitBox = new Phaser.Math.Vector2(x - centerX, y - centerY).normalize();
                 hitBox.scale(radius * 1.4);
                 let setPointX = this.player.x + hitBox.x;
                 let setPointY = this.player.y + hitBox.y;
                 hitBox.scale(2)
                 let moveTo = new Phaser.Math.Vector2(this.player.x + hitBox.x, this.player.y + hitBox.y);
                 balls.push(this.ball = new Ball(this, setPointX, setPointY, moveTo))
-    
+        
                 this.player.score--;
                 this.player.updateSize(this.player.score);
+                
             }
-        }, this);
+         },this);
         
     }
 
     update (time: number, deltaTime: number)
     {
-        updateHandler(this);
+        this.events.emit('updateScore', this.player.score);
+        this.setCameraZoom(this.cameras.main, this.player.score);
         
         //player movement logic
         let speed = 1 - Math.min(0.7, this.player.score / 200);
-        const mouseX = this.input.mousePointer.x;
-        const mouseY = this.input.mousePointer.y;
-        const centerX = this.cameras.main.centerX;
-        const centerY = this.cameras.main.centerY;
+        const {centerX, centerY} = this.cameras.main;
+        const {x, y} = this.input.mousePointer;
     
-        const mouseDistance = Phaser.Math.Distance.Between(mouseX, mouseY, centerX, centerY);
+        const mouseDistance = Phaser.Math.Distance.Between(x, y, centerX, centerY);
         if(mouseDistance < 100){
             var removeSpeed = 0.5 - mouseDistance / 200;
             speed = speed - removeSpeed
         }
     
-        let direction = new Phaser.Math.Vector2(mouseX - centerX, mouseY - centerY).normalize();
+        let direction = new Phaser.Math.Vector2(x - centerX, y - centerY).normalize();
         this.player.x += direction.x * speed * deltaTime / 6;
         this.player.y += direction.y * speed * deltaTime / 6;
     }
 
-    pointCollision(player : Player, ball : Ball) {
+    private pointCollision(player : Player, ball : Ball) {
         ball.destroy();
         player.score++;
         player.updateSize(player.score);
     }
 
-    createWorld(scene: GameScene, balls: Ball[]){
+    private createWorld(scene: GameScene, balls: Ball[]){
         scene.bg = scene.add.tileSprite(0, 0, 1000, 1000, 'bg');
         scene.physics.world.setBounds(-500,-500,1000,1000);
 
@@ -82,7 +79,7 @@ export class Game extends GameScene{
         }
     }
     
-    createPlayer(scene: GameScene){
+    private createPlayer(scene: GameScene){
         scene.player = new Player(scene, Phaser.Math.Between(-300,300), Phaser.Math.Between(-300,300));
         scene.cameras.main.startFollow(scene.player);
     }
