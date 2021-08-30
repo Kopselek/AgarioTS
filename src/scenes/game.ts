@@ -9,31 +9,14 @@ export class Game extends GameScene{
 
     create ()
     {
-        var balls: Ball[] = []
-        this.createWorld(this, balls);
+        this.createWorld(this, this.balls);
         this.createPlayer(this);
         
-        this.physics.add.overlap(this.player, balls, this.onPointCollision);
+        this.physics.add.overlap(this.player, this.balls, this.onPointCollision);
 
         let pushKey = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.W);
 
-        pushKey.on('down', function (key: Phaser.Input.Keyboard.Key, event: KeyboardEvent) {
-            if(this.player.score > 20){
-                let radius = this.player.getRadius();
-                const {centerX, centerY} = this.cameras.main;
-                const {x, y} = this.input.mousePointer;
-        
-                let hitBox = new Phaser.Math.Vector2(x - centerX, y - centerY).normalize();
-                hitBox.scale(radius * 1.4);
-                let direction = hitBox.clone().scale(2);
-                let moveTo = new Phaser.Math.Vector2(this.player.x + direction.x, this.player.y + direction.y);
-                balls.push(this.ball = new Ball(this, this.player.x + hitBox.x, this.player.y + hitBox.y, moveTo))
-        
-                this.player.score--;
-                this.player.updateSize(this.player.score);
-                
-            }
-         },this);
+        pushKey.on('down', this.onKeyPushed, this);
         
     }
 
@@ -76,5 +59,22 @@ export class Game extends GameScene{
     private createPlayer(scene: GameScene){
         scene.player = new Player(scene, Phaser.Math.Between(-300,300), Phaser.Math.Between(-300,300));
         scene.cameras.main.startFollow(scene.player);
+    }
+
+    private onKeyPushed(){
+            if(this.player.score > 20){
+                let radius = this.player.getRadius();
+                const {centerX, centerY} = this.cameras.main;
+                const {x, y} = this.input.mousePointer;
+        
+                let hitBox = new Phaser.Math.Vector2(x - centerX, y - centerY).normalize();
+                hitBox.scale(radius * 1.4);
+                let direction = hitBox.clone().scale(2);
+                let moveTo = new Phaser.Math.Vector2(this.player.x + direction.x, this.player.y + direction.y);
+                this.balls.push(this.ball = new Ball(this, this.player.x + hitBox.x, this.player.y + hitBox.y, moveTo))
+                
+                this.player.score--;
+                this.player.updateSize(this.player.score);
+            }
     }
 }
