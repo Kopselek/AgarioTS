@@ -19,3 +19,7 @@ Run project by
 ```
 npm start
 ```
+
+### Project Presentation
+
+![](https://github.com/Kopselek/AgarioTS/presentation.gif)
