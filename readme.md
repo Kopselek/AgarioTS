@@ -22,4 +22,4 @@ npm start
 
 ### Project Presentation
 
-![](https://https://github.com/Kopselek/AgarioTS/blob/main/presentation.gif)
+![](https://github.com/Kopselek/AgarioTS/blob/main/presentation.gif)
