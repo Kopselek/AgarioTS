@@ -11,14 +11,11 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/Yazir/snacksnatcher.git"
+    "url": "git+https://github.com/Kopselek/AgarioTS.git"
   },
   "author": "Kopselek",
   "license": "MIT",
-  "bugs": {
-    "url": "https://github.com/Yazir/snacksnatcher/issues"
-  },
-  "homepage": "https://github.com/Yazir/snacksnatcher#readme",
+  "homepage": "https://github.com/Kopselek/AgarioTS#readme",
   "devDependencies": {
     "@types/node": "^14.14.37",
     "clean-webpack-plugin": "^4.0.0-alpha.0",
